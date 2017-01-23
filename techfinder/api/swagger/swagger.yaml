@@ -1,0 +1,112 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: TechFinder
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /p2pApp
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /industries:
+    # binds a127 app logic to a route
+    x-swagger-router-controller: /industries
+    get:
+      description: Obtains the standard list of industries
+      # used as the method name of the controller
+      operationId: standard_list_industries
+      parameters:
+        - name: apiKey
+          in: query
+          description: API Key
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/StandardListIndustriesResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /specialityDomains:
+    x-swagger-route-controller: /specialityDomains
+    get:
+      description: Obtain the standard list of speciality domains
+      operationId: standard_list_speciality_domains
+      parameters:
+        - name: apiKey
+          in: query
+          description: API Key
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema: 
+            $ref: "#/definitions/StandardListSpecialityDomainsResponse"
+        default:
+          description: Error
+          schema: 
+            $ref: "#/definitions/ErrorResponse"
+  /businessTypes:
+    x-swagger-route-controller: /businessTypes
+    get:
+      description: Obtain the standard list of speciality domains
+      operationId: standard_list_business_types
+      parameters:
+        - name: apiKey
+          in: query
+          description: API Key
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema: 
+            $ref: "#/definitions/StandardListBusinessTypesResponse"
+        default:
+          description: Error
+          schema: 
+            $ref: "#/definitions/ErrorResponse"
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+  StandardListIndustriesResponse:
+    required:
+      - list
+    properties:
+      list:
+        type: string
+  StandardListSpecialityDomainsResponse:
+    required: 
+      - list
+    properties:
+      list:
+        type: string
+  StandardListBusinessTypesResponse:
+    required: 
+      - list
+    properties:
+      list:
+        type: string
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
