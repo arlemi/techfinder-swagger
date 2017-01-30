@@ -1,0 +1,477 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "0.0.1",
+		"title": "TechFinder"
+	},
+	"host": "localhost:10010",
+	"basePath": "/p2pApp",
+	"schemes": [
+		"http",
+		"https"
+	],
+	"consumes": [
+		"application/json"
+	],
+	"produces": [
+		"application/json"
+	],
+	"paths": {
+		"/industries": {
+			"x-swagger-router-controller": "/industries",
+			"get": {
+				"description": "Obtains the standard list of industries",
+				"operationId": "standard_list_industries",
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/StandardListIndustriesResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/specialityDomains": {
+			"x-swagger-route-controller": "/specialityDomains",
+			"get": {
+				"description": "Obtain the standard list of speciality domains",
+				"operationId": "standard_list_speciality_domains",
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/StandardListSpecialityDomainsResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/businessTypes": {
+			"x-swagger-route-controller": "/businessTypes",
+			"get": {
+				"description": "Obtain the standard list of speciality domains",
+				"operationId": "standard_list_business_types",
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/StandardListBusinessTypesResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users": {
+			"x-swagger-router-controller": "/users",
+			"post": {
+				"description": "Creation of a user",
+				"operationId": "register_user",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"description": "JSON structure for user information",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/User"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/RegisterUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}": {
+			"x-swagger-router-controller": "/users/{userId}",
+			"put": {
+				"description": "Update a user profile",
+				"operationId": "update_user",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "id of the user to update",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"description": "JSON structure for user information",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/User"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/UpdateUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			},
+			"get": {
+				"description": "Get a user profile",
+				"operationId": "get_user",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "id of the user to update",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/GetUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			},
+			"delete": {
+				"description": "Delete a user profile",
+				"operationId": "delete_user",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "apiAdminKey",
+						"in": "header",
+						"description": "API admin Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "id of the user to update",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/DeleteUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/swagger": {
+			"x-swagger-pipe": "swagger_raw"
+		}
+	},
+	"definitions": {
+		"StandardListIndustriesResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"StandardListSpecialityDomainsResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"StandardListBusinessTypesResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"RegisterUserResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"UpdateUserResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"GetUserResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"DeleteUserResponse": {
+			"required": [
+				"operation"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				}
+			}
+		},
+		"ErrorResponse": {
+			"required": [
+				"operation",
+				"error"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"error": {
+					"type": "object",
+					"properties": {
+						"code": {
+							"type": "integer"
+						},
+						"failureReason": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		},
+		"User": {
+			"type": "object",
+			"properties": {
+				"userId": {
+					"type": "integer"
+				},
+				"userLastName": {
+					"type": "string"
+				},
+				"userFirstName": {
+					"type": "string"
+				},
+				"partnerName": {
+					"type": "string"
+				},
+				"address": {
+					"type": "object"
+				},
+				"phone": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				},
+				"specialityDomains": {
+					"type": "object"
+				},
+				"businessTypes": {
+					"type": "object"
+				},
+				"tags": {
+					"type": "object"
+				},
+				"nbPlublishedSearches": {
+					"type": "integer"
+				},
+				"nbOpportunities": {
+					"type": "integer"
+				},
+				"photoUrl": {
+					"type": "string"
+				},
+				"location": {
+					"type": "object"
+				},
+				"shareEmail": {
+					"type": "boolean"
+				},
+				"sharePhone": {
+					"type": "boolean"
+				}
+			}
+		}
+	}
+}

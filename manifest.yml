@@ -1,4 +1,4 @@
-maniapplications:
+applications:
 - path: .
   memory: 256M
   instances: 1
