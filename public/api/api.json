@@ -438,7 +438,7 @@
 					{
 						"name": "searchId",
 						"in": "path",
-						"description": "id of the user to update",
+						"description": "id of the search",
 						"required": true,
 						"type": "integer"
 					}
@@ -472,7 +472,7 @@
 					{
 						"name": "searchId",
 						"in": "path",
-						"description": "id of the user to update",
+						"description": "id of the search",
 						"required": true,
 						"type": "integer"
 					}
@@ -482,6 +482,131 @@
 						"description": "Success",
 						"schema": {
 							"$ref": "#/definitions/DeleteSearchResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}/opportunities": {
+			"x-swagger-route-controller": "/users/{userId}/opportunities",
+			"get": {
+				"description": "Return the opportunities related to a user",
+				"operationId": "get_user_opportunities",
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "id of the user",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/OpportunitiesResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/opportunities": {
+			"x-swagger-router-controller": "/opportunities",
+			"post": {
+				"description": "create an opportunity",
+				"operationId": "create_opportunity",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"description": "JSON object for an opportunity",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Opportunity"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/OpportunityResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/opportunities/{opportunityId}": {
+			"x-swagger-router-controller": "/opportunities/{opportunityId}",
+			"delete": {
+				"description": "delete an opportunity",
+				"operationId": "delete_opportunity",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "opportunityId",
+						"in": "path",
+						"description": "ID of the opportunity to delete",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/DeleteOpportunityResponse"
 						}
 					},
 					"default": {
@@ -679,6 +804,44 @@
 				}
 			}
 		},
+		"OpportunitiesResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "object"
+				}
+			}
+		},
+		"OpportunityResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "object"
+				}
+			}
+		},
+		"DeleteOpportunityResponse": {
+			"required": [
+				"operation"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				}
+			}
+		},
 		"ErrorResponse": {
 			"required": [
 				"operation",
@@ -785,6 +948,17 @@
 				},
 				"tags": {
 					"type": "object"
+				}
+			}
+		},
+		"Opportunity": {
+			"type": "object",
+			"properties": {
+				"opportunityId": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string"
 				}
 			}
 		}
