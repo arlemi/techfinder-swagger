@@ -278,6 +278,221 @@
 				}
 			}
 		},
+		"/users/login": {
+			"x-swagger-router-controller": "/users/login",
+			"post": {
+				"description": "Login of a user",
+				"operationId": "login_user",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "location",
+						"in": "body",
+						"description": "JSON structure for user location",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Location"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/LoginUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}/searches": {
+			"x-swagger-router-controller": "/users/{userId}/searches",
+			"post": {
+				"description": "Search for users",
+				"operationId": "search_for_users",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "maxResults",
+						"in": "query",
+						"description": "max number of results returned",
+						"type": "integer",
+						"required": false
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "id of the user to update",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "searchPattern",
+						"in": "body",
+						"description": "JSON structure for search pattern",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/SearchPattern"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/SearchForUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			},
+			"get": {
+				"description": "Searcch for users",
+				"operationId": "all_searches_for_users",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "id of the user to update",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/SearchesForUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/searches/{searchId}": {
+			"x-swagger-route-controller": "/searches/{searchId}",
+			"get": {
+				"description": "Get the content of a search",
+				"operationId": "get_search_content",
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "searchId",
+						"in": "path",
+						"description": "id of the user to update",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/SearchContentResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			},
+			"delete": {
+				"description": "delete a publisjed search",
+				"operationId": "delete_search",
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "searchId",
+						"in": "path",
+						"description": "id of the user to update",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/DeleteSearchResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
 		"/swagger": {
 			"x-swagger-pipe": "swagger_raw"
 		}
@@ -395,6 +610,75 @@
 				}
 			}
 		},
+		"LoginUserResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"SearchForUserResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "object"
+				}
+			}
+		},
+		"SearchesForUserResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "object"
+				}
+			}
+		},
+		"SearchContentResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "object"
+				}
+			}
+		},
+		"DeleteSearchResponse": {
+			"required": [
+				"operation"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				}
+			}
+		},
 		"ErrorResponse": {
 			"required": [
 				"operation",
@@ -470,6 +754,37 @@
 				},
 				"sharePhone": {
 					"type": "boolean"
+				}
+			}
+		},
+		"Location": {
+			"type": "object",
+			"properties": {
+				"latitude": {
+					"type": "integer"
+				},
+				"longitude": {
+					"type": "integer"
+				}
+			}
+		},
+		"SearchPattern": {
+			"type": "object",
+			"properties": {
+				"address": {
+					"type": "object"
+				},
+				"specialityDomains": {
+					"type": "object"
+				},
+				"businessTypes": {
+					"type": "object"
+				},
+				"industries": {
+					"type": "object"
+				},
+				"tags": {
+					"type": "object"
 				}
 			}
 		}
