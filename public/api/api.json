@@ -1,11 +1,34 @@
 {
 	"swagger": "2.0",
 	"info": {
-		"version": "0.0.1",
-		"title": "TechFinder"
+		"version": "0.0.4",
+		"title": "TechFinder",
+		"description": "Swagger for the backend API of the TechFinder project",
+		"contact": {
+			"name": "Arlemi Turpault",
+			"email": "arlemi.turpault1@fr.ibm.com"
+		}
 	},
-	"host": "localhost:10010",
+	"host": "techfinder-swagger.mybluemix.net",
 	"basePath": "/p2pApp",
+	"tags": [
+		{
+			"name": "Lists",
+			"description": "Standard lists API"
+		},
+		{
+			"name": "Users",
+			"description": "User related API"
+		},
+		{
+			"name": "Search",
+			"description": "Search related API"
+		},
+		{
+			"name": "Opportunity",
+			"description": "Opportunity related API"
+		}
+	],
 	"schemes": [
 		"http",
 		"https"
@@ -20,6 +43,9 @@
 		"/industries": {
 			"x-swagger-router-controller": "/industries",
 			"get": {
+				"tags": [
+					"Lists"
+				],
 				"description": "Obtains the standard list of industries",
 				"operationId": "standard_list_industries",
 				"parameters": [
@@ -50,6 +76,9 @@
 		"/specialityDomains": {
 			"x-swagger-route-controller": "/specialityDomains",
 			"get": {
+				"tags": [
+					"Lists"
+				],
 				"description": "Obtain the standard list of speciality domains",
 				"operationId": "standard_list_speciality_domains",
 				"parameters": [
@@ -80,6 +109,9 @@
 		"/businessTypes": {
 			"x-swagger-route-controller": "/businessTypes",
 			"get": {
+				"tags": [
+					"Lists"
+				],
 				"description": "Obtain the standard list of speciality domains",
 				"operationId": "standard_list_business_types",
 				"parameters": [
@@ -110,6 +142,9 @@
 		"/users": {
 			"x-swagger-router-controller": "/users",
 			"post": {
+				"tags": [
+					"Users"
+				],
 				"description": "Creation of a user",
 				"operationId": "register_user",
 				"consumes": [
@@ -155,6 +190,9 @@
 		"/users/{userId}": {
 			"x-swagger-router-controller": "/users/{userId}",
 			"put": {
+				"tags": [
+					"Users"
+				],
 				"description": "Update a user profile",
 				"operationId": "update_user",
 				"consumes": [
@@ -204,6 +242,9 @@
 				}
 			},
 			"get": {
+				"tags": [
+					"Users"
+				],
 				"description": "Get a user profile",
 				"operationId": "get_user",
 				"produces": [
@@ -241,6 +282,9 @@
 				}
 			},
 			"delete": {
+				"tags": [
+					"Users"
+				],
 				"description": "Delete a user profile",
 				"operationId": "delete_user",
 				"produces": [
@@ -281,6 +325,9 @@
 		"/users/login": {
 			"x-swagger-router-controller": "/users/login",
 			"post": {
+				"tags": [
+					"Users"
+				],
 				"description": "Login of a user",
 				"operationId": "login_user",
 				"consumes": [
@@ -326,6 +373,9 @@
 		"/users/{userId}/searches": {
 			"x-swagger-router-controller": "/users/{userId}/searches",
 			"post": {
+				"tags": [
+					"Search"
+				],
 				"description": "Search for users",
 				"operationId": "search_for_users",
 				"consumes": [
@@ -382,6 +432,9 @@
 				}
 			},
 			"get": {
+				"tags": [
+					"Search"
+				],
 				"description": "Searcch for users",
 				"operationId": "all_searches_for_users",
 				"consumes": [
@@ -425,6 +478,9 @@
 		"/searches/{searchId}": {
 			"x-swagger-route-controller": "/searches/{searchId}",
 			"get": {
+				"tags": [
+					"Search"
+				],
 				"description": "Get the content of a search",
 				"operationId": "get_search_content",
 				"parameters": [
@@ -459,6 +515,9 @@
 				}
 			},
 			"delete": {
+				"tags": [
+					"Search"
+				],
 				"description": "delete a publisjed search",
 				"operationId": "delete_search",
 				"parameters": [
@@ -496,6 +555,9 @@
 		"/users/{userId}/opportunities": {
 			"x-swagger-route-controller": "/users/{userId}/opportunities",
 			"get": {
+				"tags": [
+					"Opportunity"
+				],
 				"description": "Return the opportunities related to a user",
 				"operationId": "get_user_opportunities",
 				"parameters": [
@@ -533,6 +595,9 @@
 		"/opportunities": {
 			"x-swagger-router-controller": "/opportunities",
 			"post": {
+				"tags": [
+					"Opportunity"
+				],
 				"description": "create an opportunity",
 				"operationId": "create_opportunity",
 				"consumes": [
@@ -578,6 +643,9 @@
 		"/opportunities/{opportunityId}": {
 			"x-swagger-router-controller": "/opportunities/{opportunityId}",
 			"delete": {
+				"tags": [
+					"Opportunity"
+				],
 				"description": "delete an opportunity",
 				"operationId": "delete_opportunity",
 				"consumes": [
