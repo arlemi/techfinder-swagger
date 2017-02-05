@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 0.0.4
+  version: 0.1.0
   title: TechFinder
   description: Swagger for the backend API of the TechFinder project
   contact:
