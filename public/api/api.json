@@ -1,717 +1,1086 @@
-swagger: '2.0'
-info:
-  version: 0.1.0
-  title: TechFinder
-  description: Swagger for the backend API of the TechFinder project
-  contact:
-    email: arlemi.turpault1@fr.ibm.com
-host: 'techfinder-swagger.mybluemix.net'
-basePath: /p2pApp
-tags:
-  - name: Lists
-    description: Standard lists API
-  - name: Users
-    description: User related API
-  - name: Search
-    description: Search related API
-  - name: Opportunity
-    description: Opportunity related API
-schemes:
-  - http
-  - https
-consumes:
-  - application/json
-produces:
-  - application/json
-paths:
-  /industries:
-    x-swagger-router-controller: /industries
-    get:
-      tags:
-      - Lists
-      description: Obtains the standard list of industries
-      operationId: industries
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/StandardListIndustriesResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-  /businessTypes:
-    x-swagger-route-controller: /businessTypes
-    get:
-      tags:
-      - Lists    
-      description: Obtain the standard list of speciality domains
-      operationId: business_types
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/StandardListBusinessTypesResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-  /specialityDomains/typeAhead:
-    x-swagger-route-controller: /specialityDomains
-    get:
-      tags:
-      - Lists    
-      description: Obtain the standard list of speciality domains
-      operationId: speciality_domains
-      parameters:
-        - name: q
-          in: query
-          description: a string typed by the user
-          required: false
-          type: string      
-        - name: limit
-          in: query
-          description: maximum number of results returned
-          required: true
-          type: integer             
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/StandardListSpecialityDomainsResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'            
-  /users:
-    x-swagger-router-controller: /users
-    post:
-      tags:
-      - Users    
-      description: Creation of a user
-      operationId: register_user
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - name: Authorization
-          in: header
-          description: HMAC signature
-          required: true
-          type: string
-        - name: body
-          in: body
-          description: JSON structure for user information
-          required: true
-          schema:
-            "$ref": "#/definitions/User"
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/RegisterUserResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-  /users/{userId}:
-    x-swagger-router-controller: /users/{userId}
-    put:
-      tags:
-      - Users  
-      description: Update a user profile
-      operationId: update_user
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - name: Authorization
-          in: header
-          description: Authorization Bearer <token>
-          required: true
-          type: string
-        - name: userId
-          in: path
-          description: id of the user to update
-          required: true
-          type: integer
-        - name: body
-          in: body
-          description: JSON structure for user information
-          required: true
-          schema:
-            "$ref": "#/definitions/User"
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/UpdateUserResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-    get:
-      tags:
-      - Users  
-      description: Get a user profile
-      operationId: get_user
-      produces:
-        - application/json
-      parameters:
-        - name: Authorization
-          in: header
-          description: Authorization Bearer <token>
-          required: true
-          type: string
-        - name: userId
-          in: path
-          description: id of the user to update
-          required: true
-          type: integer
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/GetUserResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-    delete:
-      tags:
-      - Users  
-      description: Delete a user profile
-      operationId: delete_user
-      produces:
-        - application/json
-      parameters:
-        - name: apiAdminKey
-          in: header
-          description: API admin Key
-          required: true
-          type: string
-        - name: userId
-          in: path
-          description: id of the user to update
-          required: true
-          type: integer
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/DeleteUserResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-      deprecated: true
-  /users/login:
-    x-swagger-router-controller: /users/login
-    post:
-      tags:
-      - Users  
-      description: Login of a user
-      operationId: login_user
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - name: Authorization
-          in: header
-          description: HMAC signature
-          required: true
-          type: string
-        - name: location
-          in: body
-          description: JSON structure for user location
-          required: false
-          schema:
-            "$ref": "#/definitions/Location"
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/LoginUserResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-  /users/{userId}/searches:
-    x-swagger-router-controller: /users/{userId}/searches
-    post:
-      tags:
-      - Search  
-      description: Search for users
-      operationId: search_for_users
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - name: Authorization
-          in: header
-          description: Authorization Bearer <token>
-          required: true
-          type: string
-        - name: userId
-          in: path
-          description: id of the user to update
-          required: true
-          type: integer
-        - name: maxResults
-          in: query
-          description: max number of results returned
-          type: integer
-          required: false          
-        - name: searchPattern
-          in: body
-          description: JSON structure for search pattern
-          required: true
-          schema:
-            "$ref": "#/definitions/SearchPattern"
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/SearchForUserResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-    get:
-      tags:
-      - Search 
-      description: Searches for a user
-      operationId: all_searches_for_user
-      consumes:
-        - application/json
-      produces:
-        - application/json      
-      parameters: 
-        - name: Authorization
-          in: header
-          description: Authorization Bearer <token>
-          required: true
-          type: string
-        - name: userId
-          in: path
-          description: id of the user to update
-          required: true
-          type: integer          
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/SearchesForUserResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'   
-  /searches:
-    x-swagger-route-controller: /searches
-    post:
-      tags:
-      - Search
-      description: Search for users (user representing a group inside a partner)
-      operationId: search_user
-      parameters:
-        - name: Authorization
-          in: header
-          description: Authorization Bearer <token>
-          required: true
-          type: string
-        - name: maxResults
-          in: query
-          description: max number of results returned
-          type: integer
-          required: false            
-        - name: searchPattern
-          in: body
-          description: JSON structure for search pattern
-          required: true
-          schema:
-            "$ref": "#/definitions/SearchPattern"      
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/SearchUserResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'             
-  /searches/{searchId}:
-    x-swagger-route-controller: /searches/{searchId}
-    get:
-      tags:
-      - Search 
-      description: Get the content of a search
-      operationId: get_search_content
-      parameters:
-        - name: Authorization
-          in: header
-          description: Authorization Bearer <token>
-          required: true
-          type: string
-        - name: searchId
-          in: path
-          description: id of the search
-          required: true
-          type: integer            
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/SearchContentResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'  
-    delete:
-      tags:
-      - Search 
-      description: delete a publisjed search
-      operationId: delete_search
-      parameters:
-        - name: Authorization
-          in: header
-          description: Authorization Bearer <token>
-          required: true
-          type: string
-        - name: searchId
-          in: path
-          description: id of the search
-          required: true
-          type: integer            
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/DeleteSearchResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'   
-  /users/{userId}/opportunities:
-    x-swagger-route-controller: /users/{userId}/opportunities
-    get:
-      tags:
-      - Opportunity 
-      description: Return the opportunities related to a user
-      operationId: get_user_opportunities
-      parameters:
-        - name: Authorization
-          in: header
-          description: Authorization Bearer <token>
-          required: true
-          type: string
-        - name: userId
-          in: path
-          description: id of the user 
-          required: true
-          type: integer            
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/OpportunitiesResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'    
-  /opportunities:
-    x-swagger-router-controller: /opportunities
-    post:
-      tags:
-      - Opportunity 
-      description: create an opportunity
-      operationId: create_opportunity
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - name: Authorization
-          in: header
-          description: Authorization Bearer <token>
-          required: true
-          type: string
-        - name: body
-          in: body
-          description: JSON object for an opportunity
-          required: true
-          schema:
-            "$ref": "#/definitions/Opportunity"
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/OpportunityResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'     
-  /opportunities/{opportunityId}:
-    x-swagger-router-controller: /opportunities/{opportunityId}
-    delete:
-      tags:
-      - Opportunity 
-      description: delete an opportunity
-      operationId: delete_opportunity
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - name: apiKey
-          in: header
-          description: API Key
-          required: true
-          type: string
-        - name: opportunityId
-          in: path
-          description: ID of the opportunity to delete
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/DeleteOpportunityResponse'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/ErrorResponse' 
-  /swagger:
-    x-swagger-pipe: swagger_raw
-definitions:
-  StandardListIndustriesResponse:
-    required:
-      - operation
-      - data
-    properties:
-      operation:
-        type: string
-      data:
-        type: array
-        items:
-          type: string
-  StandardListSpecialityDomainsResponse:
-    required:
-      - operation
-      - data
-    properties:
-      operation:
-        type: string
-      data:
-        type: array
-        items:
-          type: string
-  StandardListBusinessTypesResponse:
-    required:
-      - operation
-      - data
-    properties:
-      operation:
-        type: string
-      data:
-        type: array
-        items:
-          type: string
-  RegisterUserResponse:
-    required:
-      - operation
-      - data
-    properties:
-      operation:
-        type: string
-      data:
-        type: array
-        items:
-          type: string
-  UpdateUserResponse:
-    required:
-      - operation
-      - data
-    properties:
-      operation:
-        type: string
-      data:
-        type: array
-        items:
-          type: string
-  GetUserResponse:
-    required:
-      - operation
-      - data
-    properties:
-      operation:
-        type: string
-      data:
-        type: array
-        items:
-          type: string
-  DeleteUserResponse:
-    required:
-      - operation
-    properties:
-      operation:
-        type: string
-  LoginUserResponse:
-    required:
-      - operation
-      - data
-    properties:
-      operation:
-        type: string
-      data:
-        type: array
-        items:
-          type: string
-  SearchForUserResponse:
-    required:
-      - operation
-      - data
-    properties:
-      operation:
-        type: string
-      data:
-        type: object
-  SearchUserResponse:
-    required:
-      - operation
-      - data
-    properties:
-      operation:
-        type: string
-      data:
-        type: object
-  SearchesForUserResponse:
-    required:
-      - operation
-      - data
-    properties:
-      operation:
-        type: string
-      data:
-        type: object
-  SearchContentResponse:
-    required:
-      - operation
-      - data
-    properties:
-      operation:
-        type: string
-      data:
-        type: object
-  DeleteSearchResponse:
-    required:
-      - operation
-    properties:
-      operation:
-        type: string
-  OpportunitiesResponse:
-    required:
-      - operation
-      - data
-    properties:
-      operation:
-        type: string
-      data:
-        type: object
-  OpportunityResponse:
-    required:
-      - operation
-      - data
-    properties:
-      operation:
-        type: string
-      data:
-        type: object        
-  DeleteOpportunityResponse:
-    required:
-      - operation
-    properties:
-      operation:
-        type: string
-  ErrorResponse:
-    required:
-      - operation 
-      - error
-    properties:
-      operation:
-        type: string
-      error:
-        type: object
-        properties:
-          code:
-            type: integer
-          failureReason:
-            type: string
-  User:
-    type: object
-    properties:
-      userId:
-        type: integer
-      userLastName:
-        type: string
-      userFirstName:
-        type: string
-      partnerName:
-        type: string
-      address:
-        type: object
-      phone:
-        type: string
-      email:
-        type: string
-      url:
-        type: string
-      specialityDomains:
-        type: object
-      businessTypes:
-        type: object
-      tags:
-        type: object
-      nbPlublishedSearches:
-        type: integer
-      nbOpportunities:
-        type: integer
-      photoUrl:
-        type: string
-      location:
-        type: object
-      shareEmail:
-        type: boolean
-      sharePhone:
-        type: boolean
-  Location:
-    type: object
-    properties:
-      latitude:
-        type: integer
-      longitude:
-        type: integer
-  SearchPattern:
-    type: object
-    properties:
-      address:
-        type: object
-      specialityDomains:
-        type: object
-      businessTypes:
-        type: object
-      industries:
-        type: object
-      tags:
-        type: object
-  Opportunity:
-    type: object
-    properties:
-      opportunityId:
-        type: string
-      status:
-        type: string
+{
+	"swagger": "2.0",
+	"info": {
+		"version": "0.1.0",
+		"title": "TechFinder",
+		"description": "Swagger for the backend API of the TechFinder project",
+		"contact": {
+			"email": "arlemi.turpault1@fr.ibm.com"
+		}
+	},
+	"host": "techfinder-swagger.mybluemix.net",
+	"basePath": "/p2pApp",
+	"tags": [
+		{
+			"name": "Lists",
+			"description": "Standard lists API"
+		},
+		{
+			"name": "Users",
+			"description": "User related API"
+		},
+		{
+			"name": "Search",
+			"description": "Search related API"
+		},
+		{
+			"name": "Opportunity",
+			"description": "Opportunity related API"
+		}
+	],
+	"schemes": [
+		"http",
+		"https"
+	],
+	"consumes": [
+		"application/json"
+	],
+	"produces": [
+		"application/json"
+	],
+	"paths": {
+		"/industries": {
+			"x-swagger-router-controller": "/industries",
+			"get": {
+				"tags": [
+					"Lists"
+				],
+				"description": "Obtains the standard list of industries",
+				"operationId": "industries",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/StandardListIndustriesResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/businessTypes": {
+			"x-swagger-route-controller": "/businessTypes",
+			"get": {
+				"tags": [
+					"Lists"
+				],
+				"description": "Obtain the standard list of speciality domains",
+				"operationId": "business_types",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/StandardListBusinessTypesResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/specialityDomains/typeAhead": {
+			"x-swagger-route-controller": "/specialityDomains",
+			"get": {
+				"tags": [
+					"Lists"
+				],
+				"description": "Obtain the standard list of speciality domains",
+				"operationId": "speciality_domains",
+				"parameters": [
+					{
+						"name": "q",
+						"in": "query",
+						"description": "a string typed by the user",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"description": "maximum number of results returned",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/StandardListSpecialityDomainsResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users": {
+			"x-swagger-router-controller": "/users",
+			"post": {
+				"tags": [
+					"Users"
+				],
+				"description": "Creation of a user",
+				"operationId": "register_user",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "HMAC signature",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"description": "JSON structure for user information",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/User"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/RegisterUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}": {
+			"x-swagger-router-controller": "/users/{userId}",
+			"put": {
+				"tags": [
+					"Users"
+				],
+				"description": "Update a user profile",
+				"operationId": "update_user",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Authorization Bearer <token>",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "id of the user to update",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"description": "JSON structure for user information",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/User"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/UpdateUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"Users"
+				],
+				"description": "Get a user profile",
+				"operationId": "get_user",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Authorization Bearer <token>",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "id of the user to update",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/GetUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Users"
+				],
+				"description": "Delete a user profile",
+				"operationId": "delete_user",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "apiAdminKey",
+						"in": "header",
+						"description": "API admin Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "id of the user to update",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/DeleteUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				},
+				"deprecated": true
+			}
+		},
+		"/users/login": {
+			"x-swagger-router-controller": "/users/login",
+			"post": {
+				"tags": [
+					"Users"
+				],
+				"description": "Login of a user",
+				"operationId": "login_user",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "HMAC signature",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "location",
+						"in": "body",
+						"description": "JSON structure for user location",
+						"required": false,
+						"schema": {
+							"$ref": "#/definitions/Location"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/LoginUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}/searches": {
+			"x-swagger-router-controller": "/users/{userId}/searches",
+			"post": {
+				"tags": [
+					"Search"
+				],
+				"description": "Search for users",
+				"operationId": "search_for_users",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Authorization Bearer <token>",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "id of the user to update",
+						"required": true,
+						"type": "integer"
+					},
+					{
+						"name": "maxResults",
+						"in": "query",
+						"description": "max number of results returned",
+						"type": "integer",
+						"required": false
+					},
+					{
+						"name": "searchPattern",
+						"in": "body",
+						"description": "JSON structure for search pattern",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/SearchPattern"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/SearchForUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			},
+			"get": {
+				"tags": [
+					"Search"
+				],
+				"description": "Searches for a user",
+				"operationId": "all_searches_for_user",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Authorization Bearer <token>",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "id of the user to update",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/SearchesForUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/searches": {
+			"x-swagger-route-controller": "/searches",
+			"post": {
+				"tags": [
+					"Search"
+				],
+				"description": "Search for users (user representing a group inside a partner)",
+				"operationId": "search_user",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Authorization Bearer <token>",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "maxResults",
+						"in": "query",
+						"description": "max number of results returned",
+						"type": "integer",
+						"required": false
+					},
+					{
+						"name": "searchPattern",
+						"in": "body",
+						"description": "JSON structure for search pattern",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/SearchPattern"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/SearchUserResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/searches/{searchId}": {
+			"x-swagger-route-controller": "/searches/{searchId}",
+			"get": {
+				"tags": [
+					"Search"
+				],
+				"description": "Get the content of a search",
+				"operationId": "get_search_content",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Authorization Bearer <token>",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "searchId",
+						"in": "path",
+						"description": "id of the search",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/SearchContentResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"Search"
+				],
+				"description": "delete a publisjed search",
+				"operationId": "delete_search",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Authorization Bearer <token>",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "searchId",
+						"in": "path",
+						"description": "id of the search",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/DeleteSearchResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/users/{userId}/opportunities": {
+			"x-swagger-route-controller": "/users/{userId}/opportunities",
+			"get": {
+				"tags": [
+					"Opportunity"
+				],
+				"description": "Return the opportunities related to a user",
+				"operationId": "get_user_opportunities",
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Authorization Bearer <token>",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "userId",
+						"in": "path",
+						"description": "id of the user",
+						"required": true,
+						"type": "integer"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/OpportunitiesResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/opportunities": {
+			"x-swagger-router-controller": "/opportunities",
+			"post": {
+				"tags": [
+					"Opportunity"
+				],
+				"description": "create an opportunity",
+				"operationId": "create_opportunity",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Authorization Bearer <token>",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"description": "JSON object for an opportunity",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Opportunity"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/OpportunityResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/opportunities/{opportunityId}": {
+			"x-swagger-router-controller": "/opportunities/{opportunityId}",
+			"delete": {
+				"tags": [
+					"Opportunity"
+				],
+				"description": "delete an opportunity",
+				"operationId": "delete_opportunity",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "apiKey",
+						"in": "header",
+						"description": "API Key",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "opportunityId",
+						"in": "path",
+						"description": "ID of the opportunity to delete",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/DeleteOpportunityResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/swagger": {
+			"x-swagger-pipe": "swagger_raw"
+		}
+	},
+	"definitions": {
+		"StandardListIndustriesResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"StandardListSpecialityDomainsResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"StandardListBusinessTypesResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"RegisterUserResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"UpdateUserResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"GetUserResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"DeleteUserResponse": {
+			"required": [
+				"operation"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				}
+			}
+		},
+		"LoginUserResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"SearchForUserResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "object"
+				}
+			}
+		},
+		"SearchUserResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "object"
+				}
+			}
+		},
+		"SearchesForUserResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "object"
+				}
+			}
+		},
+		"SearchContentResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "object"
+				}
+			}
+		},
+		"DeleteSearchResponse": {
+			"required": [
+				"operation"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				}
+			}
+		},
+		"OpportunitiesResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "object"
+				}
+			}
+		},
+		"OpportunityResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "object"
+				}
+			}
+		},
+		"DeleteOpportunityResponse": {
+			"required": [
+				"operation"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				}
+			}
+		},
+		"ErrorResponse": {
+			"required": [
+				"operation",
+				"error"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"error": {
+					"type": "object",
+					"properties": {
+						"code": {
+							"type": "integer"
+						},
+						"failureReason": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		},
+		"User": {
+			"type": "object",
+			"properties": {
+				"userId": {
+					"type": "integer"
+				},
+				"userLastName": {
+					"type": "string"
+				},
+				"userFirstName": {
+					"type": "string"
+				},
+				"partnerName": {
+					"type": "string"
+				},
+				"address": {
+					"type": "object"
+				},
+				"phone": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"url": {
+					"type": "string"
+				},
+				"specialityDomains": {
+					"type": "object"
+				},
+				"businessTypes": {
+					"type": "object"
+				},
+				"tags": {
+					"type": "object"
+				},
+				"nbPlublishedSearches": {
+					"type": "integer"
+				},
+				"nbOpportunities": {
+					"type": "integer"
+				},
+				"photoUrl": {
+					"type": "string"
+				},
+				"location": {
+					"type": "object"
+				},
+				"shareEmail": {
+					"type": "boolean"
+				},
+				"sharePhone": {
+					"type": "boolean"
+				}
+			}
+		},
+		"Location": {
+			"type": "object",
+			"properties": {
+				"latitude": {
+					"type": "integer"
+				},
+				"longitude": {
+					"type": "integer"
+				}
+			}
+		},
+		"SearchPattern": {
+			"type": "object",
+			"properties": {
+				"address": {
+					"type": "object"
+				},
+				"specialityDomains": {
+					"type": "object"
+				},
+				"businessTypes": {
+					"type": "object"
+				},
+				"industries": {
+					"type": "object"
+				},
+				"tags": {
+					"type": "object"
+				}
+			}
+		},
+		"Opportunity": {
+			"type": "object",
+			"properties": {
+				"opportunityId": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}
