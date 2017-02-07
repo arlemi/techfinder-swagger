@@ -1,7 +1,7 @@
 {
 	"swagger": "2.0",
 	"info": {
-		"version": "0.1.0",
+		"version": "0.0.4",
 		"title": "TechFinder",
 		"description": "Swagger for the backend API of the TechFinder project",
 		"contact": {
@@ -334,12 +334,12 @@
 						"type": "string"
 					},
 					{
-						"name": "location",
+						"name": "body",
 						"in": "body",
-						"description": "JSON structure for user location",
+						"description": "JSON structure for user login request",
 						"required": false,
 						"schema": {
-							"$ref": "#/definitions/Location"
+							"$ref": "#/definitions/LoginRequest"
 						}
 					}
 				],
@@ -473,13 +473,6 @@
 				"description": "Search for users (user representing a group inside a partner)",
 				"operationId": "search_user",
 				"parameters": [
-					{
-						"name": "Authorization",
-						"in": "header",
-						"description": "Authorization Bearer <token>",
-						"required": true,
-						"type": "string"
-					},
 					{
 						"name": "maxResults",
 						"in": "query",
@@ -658,7 +651,7 @@
 						"description": "JSON object for an opportunity",
 						"required": true,
 						"schema": {
-							"$ref": "#/definitions/Opportunity"
+							"$ref": "#/definitions/BodyOpportunity"
 						}
 					}
 				],
@@ -694,9 +687,9 @@
 				],
 				"parameters": [
 					{
-						"name": "apiKey",
+						"name": "Authorization",
 						"in": "header",
-						"description": "API Key",
+						"description": "Authorization Bearer <token>",
 						"required": true,
 						"type": "string"
 					},
@@ -713,6 +706,69 @@
 						"description": "Success",
 						"schema": {
 							"$ref": "#/definitions/DeleteOpportunityResponse"
+						}
+					},
+					"default": {
+						"description": "Error",
+						"schema": {
+							"$ref": "#/definitions/ErrorResponse"
+						}
+					}
+				}
+			}
+		},
+		"/opportunities/{opportunityId}/statuses": {
+			"x-swagger-router-controller": "/opportunities/{opportunityId}/statuses",
+			"put": {
+				"tags": [
+					"Opportunity"
+				],
+				"description": "modify an opportunity status",
+				"operationId": "update_opportunity_status",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "Authorization",
+						"in": "header",
+						"description": "Authorization Bearer <token>",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "opportunityId",
+						"in": "path",
+						"description": "ID of the opportunity to delete",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"description": "body of the request",
+						"required": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"status": {
+									"type": "string"
+								},
+								"pushNotification": {
+									"type": "boolean"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"$ref": "#/definitions/UpddateOpportunityResponse"
 						}
 					},
 					"default": {
@@ -790,10 +846,32 @@
 					"type": "string"
 				},
 				"data": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
+					"type": "object",
+					"description": "user info and token",
+					"allOf": [
+						{
+							"$ref": "#/definitions/DataUserResponse"
+						}
+					]
+				}
+			}
+		},
+		"DataUserResponse": {
+			"required": [
+				"token",
+				"user"
+			],
+			"properties": {
+				"token": {
+					"type": "string"
+				},
+				"user": {
+					"type": "object",
+					"allOf": [
+						{
+							"$ref": "#/definitions/User"
+						}
+					]
 				}
 			}
 		},
@@ -807,10 +885,12 @@
 					"type": "string"
 				},
 				"data": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
+					"type": "object",
+					"allOf": [
+						{
+							"$ref": "#/definitions/User"
+						}
+					]
 				}
 			}
 		},
@@ -824,10 +904,12 @@
 					"type": "string"
 				},
 				"data": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
+					"type": "object",
+					"allOf": [
+						{
+							"$ref": "#/definitions/User"
+						}
+					]
 				}
 			}
 		},
@@ -851,10 +933,32 @@
 					"type": "string"
 				},
 				"data": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
+					"type": "object",
+					"description": "user info and token",
+					"allOf": [
+						{
+							"$ref": "#/definitions/DataLoginUserResponse"
+						}
+					]
+				}
+			}
+		},
+		"DataLoginUserResponse": {
+			"required": [
+				"token",
+				"user"
+			],
+			"properties": {
+				"token": {
+					"type": "string"
+				},
+				"user": {
+					"type": "object",
+					"allOf": [
+						{
+							"$ref": "#/definitions/User"
+						}
+					]
 				}
 			}
 		},
@@ -868,7 +972,82 @@
 					"type": "string"
 				},
 				"data": {
-					"type": "object"
+					"type": "object",
+					"title": "Data",
+					"properties": {
+						"searchId": {
+							"type": "string"
+						},
+						"searchResult": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"allOf": [
+									"$ref: '#/definitions/SearchResult'"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"SearchResult": {
+			"type": "object",
+			"properties": {
+				"userInfos": {
+					"type": "string"
+				},
+				"score": {
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 100
+				},
+				"dateMatched": {
+					"type": "string"
+				},
+				"excludedMatch": {
+					"type": "boolean"
+				},
+				"matchedInfos": {
+					"type": "object",
+					"properties": {
+						"matchedUserid": {
+							"type": "string"
+						},
+						"matchedFirstname": {
+							"type": "string"
+						},
+						"matchedLastName": {
+							"type": "string"
+						},
+						"matchedAddress": {
+							"type": "string"
+						},
+						"relevantDomains": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"relevantIndustries": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"relevantBusinessTypes": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"relevantTags": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						}
+					}
 				}
 			}
 		},
@@ -882,7 +1061,37 @@
 					"type": "string"
 				},
 				"data": {
-					"type": "object"
+					"type": "object",
+					"title": "Data",
+					"properties": {
+						"searchId": {
+							"type": "string"
+						},
+						"searchResult": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"allOf": [
+									"$ref: '#/definitions/SearchResult'"
+								]
+							}
+						}
+					}
+				}
+			}
+		},
+		"Search": {
+			"properties": {
+				"searchId": {
+					"type": "string"
+				},
+				"pattern": {
+					"type": "object",
+					"allOf": [
+						{
+							"$ref": "#/definitions/SearchPattern"
+						}
+					]
 				}
 			}
 		},
@@ -896,7 +1105,13 @@
 					"type": "string"
 				},
 				"data": {
-					"type": "object"
+					"type": "array",
+					"items": {
+						"type": "object",
+						"allOf": [
+							"$ref: '#/definitions/Search'"
+						]
+					}
 				}
 			}
 		},
@@ -910,7 +1125,32 @@
 					"type": "string"
 				},
 				"data": {
-					"type": "object"
+					"type": "object",
+					"allOf": [
+						"$ref: '#/definitions/SearchWithResults'"
+					]
+				}
+			}
+		},
+		"SearchWithResults": {
+			"properties": {
+				"searchId": {
+					"type": "string"
+				},
+				"pattern": {
+					"type": "object",
+					"allOf": [
+						"$ref: '#/definitions/SearchPattern'"
+					]
+				},
+				"searchResult": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"allOf": [
+							"$ref: '#/definitions/SearchResult'"
+						]
+					}
 				}
 			}
 		},
@@ -934,7 +1174,13 @@
 					"type": "string"
 				},
 				"data": {
-					"type": "object"
+					"type": "array",
+					"items": {
+						"type": "object",
+						"allOf": [
+							"$ref: '#/definitions/Opportunity'"
+						]
+					}
 				}
 			}
 		},
@@ -948,7 +1194,10 @@
 					"type": "string"
 				},
 				"data": {
-					"type": "object"
+					"type": "object",
+					"allOf": [
+						"$ref: '#/definitions/Opportunity'"
+					]
 				}
 			}
 		},
@@ -984,6 +1233,43 @@
 				}
 			}
 		},
+		"UpddateOpportunityResponse": {
+			"required": [
+				"operation",
+				"data"
+			],
+			"properties": {
+				"operation": {
+					"type": "string"
+				},
+				"data": {
+					"type": "object",
+					"allOf": [
+						"$ref: '#/definitions/Opportunity'"
+					]
+				}
+			}
+		},
+		"LoginRequest": {
+			"required": [
+				"userId",
+				"location"
+			],
+			"properties": {
+				"userId": {
+					"type": "string"
+				},
+				"location": {
+					"type": "object",
+					"description": "last known location of the user",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Location"
+						}
+					]
+				}
+			}
+		},
 		"User": {
 			"type": "object",
 			"properties": {
@@ -1000,7 +1286,13 @@
 					"type": "string"
 				},
 				"address": {
-					"type": "object"
+					"type": "object",
+					"description": "Complete Address of the User",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Address"
+						}
+					]
 				},
 				"phone": {
 					"type": "string"
@@ -1012,13 +1304,22 @@
 					"type": "string"
 				},
 				"specialityDomains": {
-					"type": "object"
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
 				},
 				"businessTypes": {
-					"type": "object"
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
 				},
-				"tags": {
-					"type": "object"
+				"industries": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
 				},
 				"nbPlublishedSearches": {
 					"type": "integer"
@@ -1030,13 +1331,39 @@
 					"type": "string"
 				},
 				"location": {
-					"type": "object"
+					"type": "object",
+					"description": "Last known location of the user",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Location"
+						}
+					]
 				},
 				"shareEmail": {
 					"type": "boolean"
 				},
 				"sharePhone": {
 					"type": "boolean"
+				}
+			}
+		},
+		"Address": {
+			"type": "object",
+			"properties": {
+				"streetInformation": {
+					"type": "string"
+				},
+				"city": {
+					"type": "string"
+				},
+				"zipCode": {
+					"type": "string"
+				},
+				"state": {
+					"type": "string"
+				},
+				"country": {
+					"type": "string"
 				}
 			}
 		},
@@ -1048,6 +1375,9 @@
 				},
 				"longitude": {
 					"type": "integer"
+				},
+				"timestamp": {
+					"type": "integer"
 				}
 			}
 		},
@@ -1055,19 +1385,73 @@
 			"type": "object",
 			"properties": {
 				"address": {
-					"type": "object"
+					"type": "object",
+					"description": "complete address",
+					"allOf": [
+						{
+							"$ref": "#/definitions/SearchPatternAddress"
+						}
+					]
 				},
 				"specialityDomains": {
-					"type": "object"
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
 				},
 				"businessTypes": {
-					"type": "object"
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
 				},
 				"industries": {
-					"type": "object"
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"SearchPatternAddress": {
+			"required": [
+				"streetInformation",
+				"city",
+				"zipCode",
+				"state",
+				"country"
+			],
+			"properties": {
+				"streetInformation": {
+					"type": "string"
 				},
-				"tags": {
-					"type": "object"
+				"city": {
+					"type": "string"
+				},
+				"zipCode": {
+					"type": "string"
+				},
+				"state": {
+					"type": "string"
+				},
+				"country": {
+					"type": "string"
+				}
+			}
+		},
+		"BodyOpportunity": {
+			"type": "object",
+			"properties": {
+				"opportunity": {
+					"type": "object",
+					"allOf": [
+						{
+							"$ref": "#/definitions/Opportunity"
+						}
+					]
+				},
+				"pushNotification": {
+					"type": "boolean"
 				}
 			}
 		},
@@ -1075,6 +1459,18 @@
 			"type": "object",
 			"properties": {
 				"opportunityId": {
+					"type": "string"
+				},
+				"target": {
+					"type": "string"
+				},
+				"timeStamp": {
+					"type": "integer"
+				},
+				"searchId": {
+					"type": "string"
+				},
+				"invitationMessage": {
 					"type": "string"
 				},
 				"status": {
