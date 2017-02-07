@@ -1,7 +1,7 @@
 {
 	"swagger": "2.0",
 	"info": {
-		"version": "0.1.1",
+		"version": "0.1.2",
 		"title": "TechFinder",
 		"description": "Swagger for the backend API of the TechFinder project",
 		"contact": {
@@ -1282,17 +1282,25 @@
 				"userFirstName": {
 					"type": "string"
 				},
+				"title": {
+					"type": "string"
+				},
 				"partnerName": {
 					"type": "string"
 				},
+				"partnerDescription": {
+					"type": "string"
+				},
 				"address": {
-					"type": "object",
-					"description": "Complete Address of the User",
-					"allOf": [
-						{
-							"$ref": "#/definitions/Address"
-						}
-					]
+					"type": "array",
+					"items": {
+						"type": "object",
+						"allOf": [
+							{
+								"$ref": "#/definitions/Address"
+							}
+						]
+					}
 				},
 				"phone": {
 					"type": "string"
