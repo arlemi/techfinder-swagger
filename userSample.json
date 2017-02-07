@@ -1,0 +1,239 @@
+{  
+   "userId":"fredL",
+   "internalId":1000,
+   "userLastname":"lefevre",
+   "userFirstName":"frederic",
+   "partnerName":"IBM Nice",
+   "address":{  
+      "streetInformation":"21, Av simone Veil",
+      "city":"Nice",
+      "zipCode":"06000",
+      "state":"PACA",
+      "country":"france"
+   },
+   "phone":"+33677020131",
+   "email":"frederic.levefre@fr.ibm.com",
+   "specialityDomains":[  
+      "construction",
+      "beton arme",
+      "top",
+      "amazing",
+      "expensive"
+   ],
+   "businessType":[  
+      {  
+         "name":"Services"
+      }
+   ],
+   "industries":[  
+      {  
+         "name":"telco",
+         "id":7001
+      },
+      {  
+         "name":"travel and transportation"
+      },
+      {  
+         "name":"health care",
+         "id":7003
+      },
+      {  
+         "id":7000
+      }
+   ],
+   "location":{  
+      "latitude":43.681509,
+      "longitude":7.203652,
+      "altitude":0,
+      "timeStamp":1486048497331
+
+   },
+   "shareEmail":true,
+   "sharePhone":true,
+   "nbPublishedSearches":0,
+   "nbOpportunities":0,
+   "photoUrl":"",
+   "url":"http://www.ibm.com"
+}
+
+
+
+{  
+   "userId":"JoelR",
+   "internalId":1001,
+   "userLastname":"rongiard",
+   "userFirstName":"joel",
+   "partnerName":"IBM Nice",
+   "address":{  
+      "streetInformation":"21, Av simone Veil",
+      "city":"Nice",
+      "zipCode":"06000",
+      "state":"PACA",
+      "country":"france"
+   },
+   "phone":"+33607619328",
+   "email":"rongiard@fr.ibm.com",
+   "specialityDomains":[  
+      "carrelage",
+      "climatisation",
+      "la gaude",
+      "suy blanc"
+   ],
+   "businessType":[  
+      {  
+         "name":"Services"
+      }
+   ],
+   "industries":[  
+      {  
+         "name":"telco",
+         "id":7001
+      },
+      {  
+         "name":"travel and transportation"
+      },
+      {  
+         "name":"health care",
+         "id":7003
+      },
+      {  
+         "name":"Marketting and communication"
+      },
+      {  
+         "id":7002
+      },
+      {  
+         "id":7000
+      },
+      {  
+         "id":7003
+      },
+      {  
+         "id":7010
+      },
+      {  
+         "id":7011
+      },
+      {  
+         "id":7022
+      },
+      {  
+         "id":7020
+      },
+      {  
+         "id":7021
+      }
+   ],
+   "location":{  
+      "latitude":43.681509,
+      "longitude":7.203652,
+      "altitude":0,
+      "timeStamp":1486048497331
+
+   },
+   "shareEmail":true,
+   "sharePhone":true,
+   "nbPublishedSearches":0,
+   "nbOpportunities":0,
+   "photoUrl":"",
+   "url":"http://www.ibm.com"
+}
+
+
+
+{  
+   "userId":"Zsolt",
+   "internalId":1002,
+   "userLastname":"Zalai",
+   "userFirstName":"Zsolt",
+   "partnerName":"IBM Nice",
+   "address":{  
+      "streetInformation":"21, Av simone Veil",
+      "city":"Nice",
+      "zipCode":"06000",
+      "state":"PACA",
+      "country":"france"
+   },
+   "phone":"+33 685945671",
+   "email":"szalai@fr.ibm.com",
+   "specialityDomains":[  
+      "india",
+      "South Asia",
+      "senior architect",
+      "quality"
+   ],
+   "businessType":[  
+      {  
+         "name":"Services"
+      }
+   ],
+   "industries":[  
+      {  
+         "name":"telco",
+         "id":7001
+      },
+      {  
+         "name":"Cognitive architecture"
+      },
+      {  
+         "name":"Watson Marketing",
+         "id":7055
+      }
+   ],
+   "location":{  
+      "latitude":43.681509,
+      "longitude":7.203652,
+      "altitude":0,
+      "timeStamp":1486048497331
+
+   },
+   "shareEmail":true,
+   "sharePhone":true,
+   "nbPublishedSearches":0,
+   "nbOpportunities":0,
+   "photoUrl":"",
+   "url":"http://www.ibm.com"
+}
+
+
+
+{  
+   "userId":"AndyW",
+   "internalId":1003,
+   "userLastname":"Warren",
+   "userFirstName":"Andy",
+   "partnerName":"Microsoft",
+   "address":{  
+      "streetInformation":"4521, Obahma Road",
+      "city":"San Francisco",
+      "zipCode":"12001",
+      "state":"California",
+      "country":"USA"
+   },
+   "phone":"(415) 972-6400",
+   "email":"andy.warren@microsoft.com",
+   "specialityDomains":[  
+      "Software",
+      "EMEA",
+      "top Sales"
+   ],
+   "businessType":[  
+      {  
+         "name":"Services"
+      }
+   ],
+   "industries":[  
+      {  
+         "name":"Cross"
+      }
+   ],
+   "location":{  
+
+   },
+   "shareEmail":true,
+   "sharePhone":true,
+   "nbPublishedSearches":0,
+   "nbOpportunities":0,
+   "photoUrl":"",
+   "url":"http://www.ibm.com"
+}
