@@ -1,0 +1,1538 @@
+{
+   "swagger": "2.0",
+   "info": {
+      "version": "0.1.3",
+      "title": "TechFinder",
+      "description": "Swagger for the backend API of the TechFinder project",
+      "contact": {
+         "email": "arlemi.turpault1@fr.ibm.com"
+      }
+   },
+   "host": "techfinder-swagger.mybluemix.net",
+   "basePath": "/p2pApp",
+   "tags": [
+      {
+         "name": "Lists",
+         "description": "Standard lists API"
+      },
+      {
+         "name": "Users",
+         "description": "User related API"
+      },
+      {
+         "name": "Search",
+         "description": "Search related API"
+      },
+      {
+         "name": "Opportunity",
+         "description": "Opportunity related API"
+      }
+   ],
+   "schemes": [
+      "http",
+      "https"
+   ],
+   "consumes": [
+      "application/json"
+   ],
+   "produces": [
+      "application/json"
+   ],
+   "paths": {
+      "/v1/industries": {
+         "x-swagger-router-controller": "/industries",
+         "get": {
+            "tags": [
+               "Lists"
+            ],
+            "description": "Obtains the standard list of industries",
+            "operationId": "industries",
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/StandardListIndustriesResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         }
+      },
+      "/v1/businessTypes": {
+         "x-swagger-route-controller": "/businessTypes",
+         "get": {
+            "tags": [
+               "Lists"
+            ],
+            "description": "Obtain the standard list of speciality domains",
+            "operationId": "business_types",
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/StandardListBusinessTypesResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         }
+      },
+      "/v1/specialityDomains/typeAhead": {
+         "x-swagger-route-controller": "/specialityDomains",
+         "get": {
+            "tags": [
+               "Lists"
+            ],
+            "description": "Obtain the standard list of speciality domains",
+            "operationId": "speciality_domains",
+            "parameters": [
+               {
+                  "name": "q",
+                  "in": "query",
+                  "description": "a string typed by the user",
+                  "required": false,
+                  "type": "string"
+               },
+               {
+                  "name": "limit",
+                  "in": "query",
+                  "description": "maximum number of results returned",
+                  "required": true,
+                  "type": "integer"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/StandardListSpecialityDomainsResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         }
+      },
+      "/v1/users": {
+         "x-swagger-router-controller": "/users",
+         "post": {
+            "tags": [
+               "Users"
+            ],
+            "description": "Creation of a user",
+            "operationId": "register_user",
+            "consumes": [
+               "application/json"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "HMAC signature",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "body",
+                  "in": "body",
+                  "description": "JSON structure for user information",
+                  "required": true,
+                  "schema": {
+                     "$ref": "#/definitions/User"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/RegisterUserResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         }
+      },
+      "/v1/users/{userId}": {
+         "x-swagger-router-controller": "/users/{userId}",
+         "put": {
+            "tags": [
+               "Users"
+            ],
+            "description": "Update a user profile",
+            "operationId": "update_user",
+            "consumes": [
+               "application/json"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Authorization Bearer <token>",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "userId",
+                  "in": "path",
+                  "description": "id of the user to update",
+                  "required": true,
+                  "type": "integer"
+               },
+               {
+                  "name": "body",
+                  "in": "body",
+                  "description": "JSON structure for user information",
+                  "required": true,
+                  "schema": {
+                     "$ref": "#/definitions/User"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/UpdateUserResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         },
+         "get": {
+            "tags": [
+               "Users"
+            ],
+            "description": "Get a user profile",
+            "operationId": "get_user",
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Authorization Bearer <token>",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "userId",
+                  "in": "path",
+                  "description": "id of the user to update",
+                  "required": true,
+                  "type": "integer"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/GetUserResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         },
+         "delete": {
+            "tags": [
+               "Users"
+            ],
+            "description": "Delete a user profile",
+            "operationId": "delete_user",
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "apiAdminKey",
+                  "in": "header",
+                  "description": "API admin Key",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "userId",
+                  "in": "path",
+                  "description": "id of the user to update",
+                  "required": true,
+                  "type": "integer"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/DeleteUserResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            },
+            "deprecated": true
+         }
+      },
+      "/v1/users/login": {
+         "x-swagger-router-controller": "/users/login",
+         "post": {
+            "tags": [
+               "Users"
+            ],
+            "description": "Login of a user",
+            "operationId": "login_user",
+            "consumes": [
+               "application/json"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "HMAC signature",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "body",
+                  "in": "body",
+                  "description": "JSON structure for user login request",
+                  "required": false,
+                  "schema": {
+                     "$ref": "#/definitions/LoginRequest"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/LoginUserResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         }
+      },
+      "/v1/users/{userId}/searches": {
+         "x-swagger-router-controller": "/users/{userId}/searches",
+         "post": {
+            "tags": [
+               "Search"
+            ],
+            "description": "Search for users",
+            "operationId": "search_for_users",
+            "consumes": [
+               "application/json"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Authorization Bearer <token>",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "userId",
+                  "in": "path",
+                  "description": "id of the user to update",
+                  "required": true,
+                  "type": "integer"
+               },
+               {
+                  "name": "maxResults",
+                  "in": "query",
+                  "description": "max number of results returned",
+                  "type": "integer",
+                  "required": false
+               },
+               {
+                  "name": "searchPattern",
+                  "in": "body",
+                  "description": "JSON structure for search pattern",
+                  "required": true,
+                  "schema": {
+                     "$ref": "#/definitions/SearchPattern"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/SearchForUserResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         },
+         "get": {
+            "tags": [
+               "Search"
+            ],
+            "description": "Searches for a user",
+            "operationId": "all_searches_for_user",
+            "consumes": [
+               "application/json"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Authorization Bearer <token>",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "userId",
+                  "in": "path",
+                  "description": "id of the user to update",
+                  "required": true,
+                  "type": "integer"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/SearchesForUserResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         }
+      },
+      "/v1/searches": {
+         "x-swagger-route-controller": "/searches",
+         "post": {
+            "tags": [
+               "Search"
+            ],
+            "description": "Search for users (user representing a group inside a partner)",
+            "operationId": "search_user",
+            "parameters": [
+               {
+                  "name": "maxResults",
+                  "in": "query",
+                  "description": "max number of results returned",
+                  "type": "integer",
+                  "required": false
+               },
+               {
+                  "name": "searchPattern",
+                  "in": "body",
+                  "description": "JSON structure for search pattern",
+                  "required": true,
+                  "schema": {
+                     "$ref": "#/definitions/SearchPattern"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/SearchUserResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         }
+      },
+      "/v1/searches/{searchId}": {
+         "x-swagger-route-controller": "/searches/{searchId}",
+         "get": {
+            "tags": [
+               "Search"
+            ],
+            "description": "Get the content of a search",
+            "operationId": "get_search_content",
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Authorization Bearer <token>",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "searchId",
+                  "in": "path",
+                  "description": "id of the search",
+                  "required": true,
+                  "type": "integer"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/SearchContentResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         },
+         "delete": {
+            "tags": [
+               "Search"
+            ],
+            "description": "delete a publisjed search",
+            "operationId": "delete_search",
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Authorization Bearer <token>",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "searchId",
+                  "in": "path",
+                  "description": "id of the search",
+                  "required": true,
+                  "type": "integer"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/DeleteSearchResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         }
+      },
+      "/v1/users/{userId}/opportunities": {
+         "x-swagger-route-controller": "/users/{userId}/opportunities",
+         "get": {
+            "tags": [
+               "Opportunity"
+            ],
+            "description": "Return the opportunities related to a user",
+            "operationId": "get_user_opportunities",
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Authorization Bearer <token>",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "userId",
+                  "in": "path",
+                  "description": "id of the user",
+                  "required": true,
+                  "type": "integer"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/OpportunitiesResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         }
+      },
+      "/v1/opportunities": {
+         "x-swagger-router-controller": "/opportunities",
+         "post": {
+            "tags": [
+               "Opportunity"
+            ],
+            "description": "create an opportunity",
+            "operationId": "create_opportunity",
+            "consumes": [
+               "application/json"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Authorization Bearer <token>",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "body",
+                  "in": "body",
+                  "description": "JSON object for an opportunity",
+                  "required": true,
+                  "schema": {
+                     "$ref": "#/definitions/BodyOpportunity"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/OpportunityResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         }
+      },
+      "/v1/opportunities/{opportunityId}": {
+         "x-swagger-router-controller": "/opportunities/{opportunityId}",
+         "delete": {
+            "tags": [
+               "Opportunity"
+            ],
+            "description": "delete an opportunity",
+            "operationId": "delete_opportunity",
+            "consumes": [
+               "application/json"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Authorization Bearer <token>",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "opportunityId",
+                  "in": "path",
+                  "description": "ID of the opportunity to delete",
+                  "required": true,
+                  "type": "string"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/DeleteOpportunityResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         }
+      },
+      "/v1/opportunities/{opportunityId}/statuses": {
+         "x-swagger-router-controller": "/opportunities/{opportunityId}/statuses",
+         "put": {
+            "tags": [
+               "Opportunity"
+            ],
+            "description": "modify an opportunity status",
+            "operationId": "update_opportunity_status",
+            "consumes": [
+               "application/json"
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "parameters": [
+               {
+                  "name": "Authorization",
+                  "in": "header",
+                  "description": "Authorization Bearer <token>",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "opportunityId",
+                  "in": "path",
+                  "description": "ID of the opportunity to delete",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "body",
+                  "in": "body",
+                  "description": "body of the request",
+                  "required": true,
+                  "schema": {
+                     "type": "object",
+                     "properties": {
+                        "status": {
+                           "type": "string"
+                        },
+                        "pushNotification": {
+                           "type": "boolean"
+                        }
+                     }
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "schema": {
+                     "$ref": "#/definitions/UpdateOpportunityResponse"
+                  }
+               },
+               "default": {
+                  "description": "Error",
+                  "schema": {
+                     "$ref": "#/definitions/ErrorResponse"
+                  }
+               }
+            }
+         }
+      },
+      "/swagger": {
+         "x-swagger-pipe": "swagger_raw"
+      }
+   },
+   "definitions": {
+      "StandardListIndustriesResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "array",
+               "items": {
+                  "type": "object",
+                  "description": "industries list",
+                  "allOf": [
+                     {
+                        "$ref": "#/definitions/ListIndustriesOrBusinessTypes"
+                     }
+                  ]
+               }
+            }
+         }
+      },
+      "StandardListSpecialityDomainsResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "array",
+               "items": {
+                  "type": "string"
+               }
+            }
+         }
+      },
+      "StandardListBusinessTypesResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "array",
+               "items": {
+                  "type": "object",
+                  "description": "industries list",
+                  "allOf": [
+                     {
+                        "$ref": "#/definitions/ListIndustriesOrBusinessTypes"
+                     }
+                  ]
+               }
+            }
+         }
+      },
+      "RegisterUserResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "object",
+               "description": "user info and token",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/DataRegisterUserResponse"
+                  }
+               ]
+            }
+         }
+      },
+      "DataRegisterUserResponse": {
+         "required": [
+            "user"
+         ],
+         "properties": {
+            "user": {
+               "type": "object",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/User"
+                  }
+               ]
+            }
+         }
+      },
+      "UpdateUserResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "object",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/User"
+                  }
+               ]
+            }
+         }
+      },
+      "GetUserResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "object",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/User"
+                  }
+               ]
+            }
+         }
+      },
+      "DeleteUserResponse": {
+         "required": [
+            "operation"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            }
+         }
+      },
+      "LoginUserResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "object",
+               "description": "user info and token",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/DataLoginUserResponse"
+                  }
+               ]
+            }
+         }
+      },
+      "DataLoginUserResponse": {
+         "required": [
+            "token",
+            "user"
+         ],
+         "properties": {
+            "token": {
+               "type": "string"
+            },
+            "user": {
+               "type": "object",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/User"
+                  }
+               ]
+            }
+         }
+      },
+      "SearchForUserResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "object",
+               "title": "Data",
+               "properties": {
+                  "searchId": {
+                     "type": "string"
+                  },
+                  "searchResult": {
+                     "type": "array",
+                     "items": {
+                        "type": "object",
+                        "allOf": [
+                           {
+                              "$ref": "#/definitions/SearchResult"
+                           }
+                        ]
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "SearchResult": {
+         "type": "object",
+         "properties": {
+            "userInfos": {
+               "type": "string"
+            },
+            "score": {
+               "type": "integer",
+               "minimum": 0,
+               "maximum": 100
+            },
+            "dateMatched": {
+               "type": "string"
+            },
+            "excludedMatch": {
+               "type": "boolean"
+            },
+            "matchedInfos": {
+               "type": "object",
+               "properties": {
+                  "matchedUserid": {
+                     "type": "string"
+                  },
+                  "matchedFirstname": {
+                     "type": "string"
+                  },
+                  "matchedLastName": {
+                     "type": "string"
+                  },
+                  "matchedAddress": {
+                     "type": "string"
+                  },
+                  "relevantDomains": {
+                     "type": "array",
+                     "items": {
+                        "type": "string"
+                     }
+                  },
+                  "relevantIndustries": {
+                     "type": "array",
+                     "items": {
+                        "type": "string"
+                     }
+                  },
+                  "relevantBusinessTypes": {
+                     "type": "array",
+                     "items": {
+                        "type": "string"
+                     }
+                  },
+                  "relevantTags": {
+                     "type": "array",
+                     "items": {
+                        "type": "string"
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "SearchUserResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "object",
+               "title": "Data",
+               "properties": {
+                  "searchId": {
+                     "type": "string"
+                  },
+                  "searchResult": {
+                     "type": "array",
+                     "items": {
+                        "type": "object",
+                        "allOf": [
+                           {
+                              "$ref": "#/definitions/SearchResult"
+                           }
+                        ]
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "Search": {
+         "properties": {
+            "searchId": {
+               "type": "string"
+            },
+            "pattern": {
+               "type": "object",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/SearchPattern"
+                  }
+               ]
+            }
+         }
+      },
+      "SearchesForUserResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "array",
+               "items": {
+                  "type": "object",
+                  "allOf": [
+                     {
+                        "$ref": "#/definitions/Search"
+                     }
+                  ]
+               }
+            }
+         }
+      },
+      "SearchContentResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "object",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/SearchWithResults"
+                  }
+               ]
+            }
+         }
+      },
+      "SearchWithResults": {
+         "properties": {
+            "searchId": {
+               "type": "string"
+            },
+            "pattern": {
+               "type": "object",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/SearchPattern"
+                  }
+               ]
+            },
+            "searchResult": {
+               "type": "array",
+               "items": {
+                  "type": "object",
+                  "allOf": [
+                     {
+                        "$ref": "#/definitions/SearchResult"
+                     }
+                  ]
+               }
+            }
+         }
+      },
+      "DeleteSearchResponse": {
+         "required": [
+            "operation"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            }
+         }
+      },
+      "OpportunitiesResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "array",
+               "items": {
+                  "type": "object",
+                  "allOf": [
+                     {
+                        "$ref": "#/definitions/Opportunity"
+                     }
+                  ]
+               }
+            }
+         }
+      },
+      "OpportunityResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "object",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/Opportunity"
+                  }
+               ]
+            }
+         }
+      },
+      "DeleteOpportunityResponse": {
+         "required": [
+            "operation"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            }
+         }
+      },
+      "ErrorResponse": {
+         "required": [
+            "operation",
+            "error"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "error": {
+               "type": "object",
+               "properties": {
+                  "code": {
+                     "type": "integer"
+                  },
+                  "failureReason": {
+                     "type": "string"
+                  }
+               }
+            }
+         }
+      },
+      "UpdateOpportunityResponse": {
+         "required": [
+            "operation",
+            "data"
+         ],
+         "properties": {
+            "operation": {
+               "type": "string"
+            },
+            "data": {
+               "type": "object",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/Opportunity"
+                  }
+               ]
+            }
+         }
+      },
+      "LoginRequest": {
+         "required": [
+            "userId",
+            "location"
+         ],
+         "properties": {
+            "userId": {
+               "type": "string"
+            },
+            "location": {
+               "type": "object",
+               "description": "last known location of the user",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/Location"
+                  }
+               ]
+            }
+         }
+      },
+      "ListIndustriesOrBusinessTypes": {
+         "type": "object",
+         "required": [
+            "name",
+            "id",
+            "scoring"
+         ],
+         "properties": {
+            "name": {
+               "type": "string"
+            },
+            "id": {
+               "type": "integer"
+            },
+            "scoring": {
+               "type": "integer"
+            }
+         }
+      },
+      "User": {
+         "type": "object",
+         "properties": {
+            "linkedInUserId": {
+               "type": "string"
+            },
+            "uniqueId": {
+               "type": "string"
+            },
+            "userLastName": {
+               "type": "string"
+            },
+            "userFirstName": {
+               "type": "string"
+            },
+            "title": {
+               "type": "string"
+            },
+            "partnerName": {
+               "type": "string"
+            },
+            "partnerDescription": {
+               "type": "string"
+            },
+            "address": {
+               "type": "array",
+               "items": {
+                  "type": "object",
+                  "allOf": [
+                     {
+                        "$ref": "#/definitions/Address"
+                     }
+                  ]
+               }
+            },
+            "phone": {
+               "type": "string"
+            },
+            "email": {
+               "type": "string"
+            },
+            "url": {
+               "type": "string"
+            },
+            "specialityDomains": {
+               "type": "array",
+               "items": {
+                  "type": "string"
+               }
+            },
+            "businessTypes": {
+               "type": "array",
+               "items": {
+                  "type": "string"
+               }
+            },
+            "industries": {
+               "type": "array",
+               "items": {
+                  "type": "string"
+               }
+            },
+            "nbPlublishedSearches": {
+               "type": "integer"
+            },
+            "nbOpportunities": {
+               "type": "integer"
+            },
+            "photoUrl": {
+               "type": "string"
+            },
+            "location": {
+               "type": "object",
+               "description": "Last known location of the user",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/Location"
+                  }
+               ]
+            },
+            "shareEmail": {
+               "type": "boolean"
+            },
+            "sharePhone": {
+               "type": "boolean"
+            }
+         }
+      },
+      "Address": {
+         "type": "object",
+         "properties": {
+            "streetInformation": {
+               "type": "string"
+            },
+            "city": {
+               "type": "string"
+            },
+            "zipCode": {
+               "type": "string"
+            },
+            "state": {
+               "type": "string"
+            },
+            "country": {
+               "type": "string"
+            }
+         }
+      },
+      "Location": {
+         "type": "object",
+         "properties": {
+            "latitude": {
+               "type": "integer"
+            },
+            "longitude": {
+               "type": "integer"
+            },
+            "timestamp": {
+               "type": "integer"
+            }
+         }
+      },
+      "SearchPattern": {
+         "type": "object",
+         "properties": {
+            "address": {
+               "type": "object",
+               "description": "complete address",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/SearchPatternAddress"
+                  }
+               ]
+            },
+            "specialityDomains": {
+               "type": "array",
+               "items": {
+                  "type": "string"
+               }
+            },
+            "businessTypes": {
+               "type": "array",
+               "items": {
+                  "type": "string"
+               }
+            },
+            "industries": {
+               "type": "array",
+               "items": {
+                  "type": "string"
+               }
+            }
+         }
+      },
+      "SearchPatternAddress": {
+         "required": [
+            "streetInformation",
+            "city",
+            "zipCode",
+            "state",
+            "country"
+         ],
+         "properties": {
+            "streetInformation": {
+               "type": "string"
+            },
+            "city": {
+               "type": "string"
+            },
+            "zipCode": {
+               "type": "string"
+            },
+            "state": {
+               "type": "string"
+            },
+            "country": {
+               "type": "string"
+            }
+         }
+      },
+      "BodyOpportunity": {
+         "type": "object",
+         "properties": {
+            "opportunity": {
+               "type": "object",
+               "allOf": [
+                  {
+                     "$ref": "#/definitions/Opportunity"
+                  }
+               ]
+            },
+            "pushNotification": {
+               "type": "boolean"
+            }
+         }
+      },
+      "Opportunity": {
+         "type": "object",
+         "properties": {
+            "opportunityId": {
+               "type": "string"
+            },
+            "target": {
+               "type": "string"
+            },
+            "timeStamp": {
+               "type": "integer"
+            },
+            "searchId": {
+               "type": "string"
+            },
+            "invitationMessage": {
+               "type": "string"
+            },
+            "status": {
+               "type": "string"
+            }
+         }
+      }
+   }
+}

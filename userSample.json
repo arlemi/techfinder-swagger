@@ -3,7 +3,9 @@
    "internalId":1000,
    "userLastname":"lefevre",
    "userFirstName":"frederic",
+   "title": "Developer",
    "partnerName":"IBM Nice",
+   "partnerDescription": "An agile start-up located in Nice",
    "address":{  
       "streetInformation":"21, Av simone Veil",
       "city":"Nice",
@@ -22,23 +24,30 @@
    ],
    "businessType":[  
       {  
-         "name":"Services"
+         "name":"Maintenance Service Provider",
+         "id": 7011
+      },
+      {
+         "name": "Software Vendor",
+         "id": 7004
       }
    ],
    "industries":[  
       {  
-         "name":"telco",
-         "id":7001
+         "name":"Telecommunications",
+         "id":9001
       },
       {  
-         "name":"travel and transportation"
+         "name":"Travel & Transportation",
+         "id": 9016
       },
       {  
-         "name":"health care",
-         "id":7003
+         "name":"Healthcare",
+         "id":9011
       },
       {  
-         "id":7000
+         "name": "Industrial Sector",
+         "id":9012
       }
    ],
    "location":{  
@@ -63,7 +72,9 @@
    "internalId":1001,
    "userLastname":"rongiard",
    "userFirstName":"joel",
+   "title": "CEO",
    "partnerName":"IBM Nice",
+   "partnerDescription": "An agile start-up located in Nice",
    "address":{  
       "streetInformation":"21, Av simone Veil",
       "city":"Nice",
@@ -81,47 +92,58 @@
    ],
    "businessType":[  
       {  
-         "name":"Services"
+         "name":"Maintenance Service Provider",
+         "id": 7011
       }
    ],
    "industries":[  
       {  
-         "name":"telco",
-         "id":7001
+         "name":"Telecommunications",
+         "id":9001
       },
       {  
-         "name":"travel and transportation"
+         "name":"Travel & Transportation",
+         "id": 9016
       },
       {  
-         "name":"health care",
-         "id":7003
+         "name":"Healthcare",
+         "id":9011
       },
       {  
-         "name":"Marketting and communication"
+         "name":"Media & Entertainment",
+         "id": 9015
       },
       {  
-         "id":7002
+         "name": "Life Sciences",
+         "id":9014
       },
       {  
-         "id":7000
+         "name": "Insurance",
+         "id":9013
       },
       {  
-         "id":7003
+         "name": "Insurance",
+         "id":9012
       },
       {  
-         "id":7010
+         "name": "Energy & Utilities",
+         "id":9010
       },
       {  
-         "id":7011
+         "name": "Electronics",
+         "id":9009
       },
       {  
-         "id":7022
+         "name": "Education",
+         "id":9008
       },
       {  
-         "id":7020
+         "name": "Chemical & Petroleum",
+         "id":9007
       },
       {  
-         "id":7021
+         "name": "Banking & Financial Markets",
+         "id":9006
       }
    ],
    "location":{  
@@ -146,7 +168,9 @@
    "internalId":1002,
    "userLastname":"Zalai",
    "userFirstName":"Zsolt",
+   "title": "Project Manager",
    "partnerName":"IBM Nice",
+   "partnerDescription": "An agile start-up located in Nice",
    "address":{  
       "streetInformation":"21, Av simone Veil",
       "city":"Nice",
@@ -164,20 +188,22 @@
    ],
    "businessType":[  
       {  
-         "name":"Services"
+         "name":"Hardware Vendor",
+         "id": 7008
       }
    ],
    "industries":[  
       {  
-         "name":"telco",
-         "id":7001
+         "name":"Telecommunications",
+         "id":9001
       },
       {  
-         "name":"Cognitive architecture"
+         "name":"Aerospace",
+         "id": 9004
       },
       {  
-         "name":"Watson Marketing",
-         "id":7055
+         "name":"Electronics",
+         "id":9009
       }
    ],
    "location":{  
@@ -202,7 +228,9 @@
    "internalId":1003,
    "userLastname":"Warren",
    "userFirstName":"Andy",
+   "title": "CTO",
    "partnerName":"Microsoft",
+   "partnerDescription": "IT Company that does a lot of IT related stuff, this description might not be very clear but at least that makes a long description and that'll help us handle the UI",
    "address":{  
       "streetInformation":"4521, Obahma Road",
       "city":"San Francisco",
@@ -219,12 +247,14 @@
    ],
    "businessType":[  
       {  
-         "name":"Services"
+         "name":"Software Support Provider",
+         "id": 7010
       }
    ],
    "industries":[  
       {  
-         "name":"Cross"
+         "name":"Life Sciences",
+         "id": 9014
       }
    ],
    "location":{  

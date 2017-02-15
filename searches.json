@@ -1,0 +1,159 @@
+{
+ "userId": 1000,
+ "address" :
+       { "streetInformation" : "",
+          "city" : "",
+          "zipCode" : "06000",
+           "state" : "",
+          "country" : ""
+      },
+  	"specialityDomains" : ["java", "cool", "agile"],
+   	"businessTypes" : [
+   		{
+   			"name": "Maintenance Service Provider",
+   			"id": 7011
+   		},
+   		{
+   			"name": "Education Provider",
+   			"id": 7006
+   		}	   		
+   	],
+  	"industries" : [
+   		{
+   			"name": "Telecommunications",
+   			"id": 9001
+   		}  		   		
+   	]
+}
+
+{
+ "userId": 1003,
+ "address" :
+       { "streetInformation" : "",
+          "city" : "San Francisco",
+          "zipCode" : "",
+           "state" : "",
+          "country" : ""
+      },
+  	"specialityDomains" : ["php", "backend developer"],
+   	"businessTypes" : [
+   		{
+   			"name": "Software Support Provider",
+   			"id": 7010
+   		},
+   		{
+   			"name": "Digital Marketing Agency",
+   			"id": 7005
+   		},
+   		{
+   			"name": "Software Developer",
+   			"id": 7003
+   		}   		   		
+   	],
+  	"industries" : [
+   		{
+   			"name": "Life Sciences",
+   			"id": 9014
+   		},
+   		{
+   			"name": "Insurance",
+   			"id": 9013
+   		},
+   		{
+   			"name": "Healthcare",
+   			"id": 9011
+   		}   		   		
+   	]
+}
+
+{
+ "userId" : 1002,
+ "address" :
+       { "streetInformation" : "",
+          "city" : "",
+          "zipCode" : "06000",
+           "state" : "",
+          "country" : "france"
+      },
+  	"specialityDomains" : ["mongodb", "cloudant", "noqsl", "sql"],
+   	"businessTypes" : [
+   		{
+   			"name": "Hardware Vendor",
+   			"id": 7008
+   		},
+   		{
+   			"name": "Software Vendor",
+   			"id": 7004
+   		},
+   		{
+   			"name": "Hardware Reseller",
+   			"id": 7007
+   		}   		   		
+   	],
+  	"industries" : [
+   		{
+   			"name": "Healthcare",
+   			"id": 9011
+   		} 		   		
+   	]
+}
+
+{
+ "userId": 1000,
+ "address" :
+       { "streetInformation" : "",
+          "city" : "Nice",
+          "zipCode" : "",
+           "state" : "",
+          "country" : ""
+      },
+  	"specialityDomains" : ["javascript", "jquery", "nodejs"],
+   	"businessTypes" : [
+   		{
+   			"name": "Maintenance Service Provider",
+   			"id": 7011
+   		} 		   		
+   	],
+  	"industries" : [
+   		{
+   			"name": "Insurance",
+   			"id": 9013
+   		}  		   		
+   	]
+}
+
+{
+ "userId": 1000,
+ "address" :
+       { "streetInformation" : "",
+          "city" : "",
+          "zipCode" : "",
+           "state" : "",
+          "country" : "USA"
+      },
+  	"specialityDomains" : ["SaaS", "Platform as a Service"],
+   	"businessTypes" : [
+   		{
+   			"name": "Consultant",
+   			"id": 7001
+   		},
+   		{
+   			"name": "Systems Integrator",
+   			"id": 7002
+   		},
+   		{
+   			"name": "Software Developer",
+   			"id": 7003
+   		}   		   		
+   	],
+  	"industries" : [
+   		{
+   			"name": "Life Sciences",
+   			"id": 9014
+   		},
+   		{
+   			"name": "Education",
+   			"id": 9008
+   		} 		   		
+   	]
+}

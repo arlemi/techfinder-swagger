@@ -1,0 +1,61 @@
+{  
+   "internalId":1000,
+   "userInfos" : {
+      "userId":"fredL",      
+      "userLastname":"lefevre",
+      "userFirstName":"frederic",
+      "partnerName":"IBM Nice",
+      "address":{  
+         "streetInformation":"21, Av simone Veil",
+         "city":"Nice",
+         "zipCode":"06000",
+         "state":"PACA",
+         "country":"france"
+      },
+      "phone":"+33677020131",
+      "email":"frederic.levefre@fr.ibm.com",
+      "specialityDomains":[  
+         "construction",
+         "beton arme",
+         "top",
+         "amazing",
+         "expensive"
+      ],
+      "businessType":[  
+         {  
+            "name":"Services"
+         }
+      ],
+      "industries":[  
+         {  
+            "name":"telco",
+            "id":7001
+         },
+         {  
+            "name":"travel and transportation"
+         },
+         {  
+            "name":"health care",
+            "id":7003
+         },
+         {  
+            "id":7000
+         }
+      ],
+      "location":{  
+         "latitude":43.681509,
+         "longitude":7.203652,
+         "altitude":0,
+         "timeStamp":1486048497331
+
+      },
+      "shareEmail":true,
+      "sharePhone":true,
+      "nbPublishedSearches":0,
+      "nbOpportunities":0,
+      "photoUrl":"",
+      "url":"http://www.ibm.com"
+   },
+   "userSearches": [0, 1, 2 , 3],
+   "userOpportunities" : [0, 1, 2 , 3],
+}
