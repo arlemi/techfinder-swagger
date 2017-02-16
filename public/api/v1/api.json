@@ -150,6 +150,20 @@
                   "type": "string"
                },
                {
+                  "name": "Device-Id",
+                  "in": "header",
+                  "description": "UUID",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "Timestamp",
+                  "in": "header",
+                  "description": "timestamp",
+                  "required": true,
+                  "type": "string"
+               },
+               {
                   "name": "body",
                   "in": "body",
                   "description": "JSON structure for user information",
@@ -330,6 +344,20 @@
                   "name": "Authorization",
                   "in": "header",
                   "description": "HMAC signature",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "Device-Id",
+                  "in": "header",
+                  "description": "UUID",
+                  "required": true,
+                  "type": "string"
+               },
+               {
+                  "name": "Timestamp",
+                  "in": "header",
+                  "description": "timestamp",
                   "required": true,
                   "type": "string"
                },
