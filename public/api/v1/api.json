@@ -1545,6 +1545,9 @@
             "opportunityId": {
                "type": "string"
             },
+            "initiator": {
+            	"type": "string"
+            },
             "target": {
                "type": "string"
             },
