@@ -1,7 +1,7 @@
 {
    "swagger": "2.0",
    "info": {
-      "version": "0.1.3",
+      "version": "0.1.4",
       "title": "TechFinder",
       "description": "Swagger for the backend API of the TechFinder project",
       "contact": {
@@ -1307,10 +1307,14 @@
       "LoginRequest": {
          "required": [
             "userId",
+            "linkedinUserId",
             "location"
          ],
          "properties": {
             "userId": {
+               "type": "string"
+            },
+            "linkedinUserId": {
                "type": "string"
             },
             "location": {
@@ -1367,7 +1371,7 @@
             "partnerDescription": {
                "type": "string"
             },
-            "address": {
+            "addresses": {
                "type": "array",
                "items": {
                   "type": "object",
@@ -1546,7 +1550,7 @@
                "type": "string"
             },
             "initiator": {
-            	"type": "string"
+               "type": "string"
             },
             "target": {
                "type": "string"
