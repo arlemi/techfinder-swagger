@@ -1306,15 +1306,15 @@
       },
       "LoginRequest": {
          "required": [
-            "userId",
-            "linkedinUserId",
+            "uniqueId",
+            "linkedInUserId",
             "location"
          ],
          "properties": {
-            "userId": {
+            "uniqueId": {
                "type": "string"
             },
-            "linkedinUserId": {
+            "linkedInUserId": {
                "type": "string"
             },
             "location": {
