@@ -42,7 +42,7 @@ app.get('/p2pApp/v1/businessTypes', function(req, res) {
   	res.send(businessTypes)
 })*/
 
-var apiUrl = "https://ibm-techfinder.mybluemix.net/p2pApp/v1"
+var apiUrl = "https://ibm-techfinder-staging.mybluemix.net/p2pApp/v1"
 
 app.use('/p2pApp/v1', function(req, res) {
   var url = apiUrl + req.url
